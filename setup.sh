@@ -14,7 +14,9 @@ fi
 
 grep -qxF '. awslinux2eb/bin/awsl2eb-boot' $HOME/.bash_profile || printf "\n\n# AWS Linux 2 Elastic Beanstalk (https://bitbucket.org/stijnster/awslinux2eb/src/master/)\n. awslinux2eb/bin/awsl2eb-boot\n" >> $HOME/.bash_profile
 
+echo ""
 echo "AWS Linux 2 Elastic Beanstalk installed"
+echo "======================================="
 echo ""
 echo "The next time you connect the boot script will be loaded. To run the boot script now, type:"
 echo ""
