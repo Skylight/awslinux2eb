@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Load environment variables
+export $(sudo cat /opt/elasticbeanstalk/deployment/env | xargs)
+
+# Expanding bin path
+export PATH="./bin:$AWSL2EB_PATH/bin:$PATH"
+
+# Setup permissions on log files
+if [ -d "/var/app/current/log" ]; then
+	sudo chmod 666 /var/app/current/log/*.log
+fi
