@@ -4,9 +4,9 @@ export AWSL2EB_PATH="$HOME/awslinux2eb"
 export AWSL2EB_VERSION="0.0.1"
 
 # Update the repo to the latest version
-cd AWSL2EB_PATH
+cd $AWSL2EB_PATH
 git pull
 cd $HOME
 
 # Run the initialisation script
-. "$AWSL2EB_PATH/bin/awsl2eb-init"
+. $AWSL2EB_PATH/bin/awsl2eb-init
