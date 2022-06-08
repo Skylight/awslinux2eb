@@ -8,12 +8,12 @@ export PATH="./bin:$AWSL2EB_PATH/bin:$PATH"
 
 # Setup permissions on log files
 if [ -d "/var/app/current/log" ]; then
-	find /var/app/current/log -type d -print0 | xargs -0 chmod 755
-	find /var/app/current/log -type f -print0 | xargs -0 chmod 644
+	sudo find /var/app/current/log -type d -print0 | xargs -0 sudo chmod 755
+	sudo find /var/app/current/log -type f -print0 | xargs -0 sudo chmod 644
 fi
 
 # Setup permissions on tmp files
 if [ -d "/var/app/current/tmp" ]; then
-	find /var/app/current/tmp -type d -print0 | xargs -0 chmod 755
-	find /var/app/current/tmp -type f -print0 | xargs -0 chmod 644
+	sudo find /var/app/current/tmp -type d -print0 | xargs -0 sudo chmod 755
+	sudo find /var/app/current/tmp -type f -print0 | xargs -0 sudo chmod 644
 fi
