@@ -1,6 +1,9 @@
 #!/bin/bash
 
-TIMESTAMP=$(date +"%Y%m%d%H%M%S")
-TEMP_FILE=/tmp/$TIMESTAMP.sql
+DUMP_NAME=$AWS_EB_ENVIRONMENT
+DUMP_ENVIRONMENT=$RACK_ENV
+
+TIMESTAMP="$(date +"%Y%m%d%H%M%S")"
+TEMP_FILE="/tmp/$TIMESTAMP-$DUMP_NAME-$DUMP_ENVIRONMENT.sql"
 
 /bin/mysqldump --host=$RDS_HOSTNAME --port=$RDS_PORT --user=$RDS_USERNAME --password=$RDS_PASSWORD $RDS_DB_NAME > $TEMP_FILE
