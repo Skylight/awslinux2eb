@@ -1,6 +1,11 @@
 #!/bin/bash
 
-COMMAND=${orig//[:]/\/}
-echo "incoming"
-echo $1
-echo COMMAND
+INITIAL=$1
+COMMAND=$AWSL2EB_PATH/bin/${INITIAL//[:]/"/"}
+
+if [[ ! -f "$COMMAND" ]]; then
+	echo "Unable to locate command with syntax $INITIAL"
+	exit 1
+fi
+
+$COMMAND
