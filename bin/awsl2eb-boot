@@ -10,3 +10,4 @@ cd $HOME
 
 # Run the initialisation script
 . $AWSL2EB_PATH/bin/awsl2eb-init
+. $AWSL2EB_PATH/etc/awsl2eb-autcomplete
