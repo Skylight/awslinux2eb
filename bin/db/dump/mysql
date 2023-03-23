@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/bin/mysqldump --host=$RDS_HOSTNAME --port=$RDS_PORT --user=$RDS_USERNAME --password=$RDS_PASSWORD $RDS_DB_NAME
