@@ -1,0 +1,6 @@
+#!/bin/bash
+
+TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+TEMP_FILE=/tmp/$TIMESTAMP.sql
+
+/bin/mysqldump --host=$RDS_HOSTNAME --port=$RDS_PORT --user=$RDS_USERNAME --password=$RDS_PASSWORD $RDS_DB_NAME > $TEMP_FILE

@@ -1,1 +1,0 @@
-complete -W 'db:console:mysql db:dump:mysql' awsl2eb
