@@ -1,1 +1,1 @@
-complete -W 'db:dump:mysql' awsl2eb
+complete -W 'db:console:mysql' awsl2eb
