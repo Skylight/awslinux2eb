@@ -1,4 +1,6 @@
 #!/bin/bash
 
+COMMAND=${orig//[:]/\/}
 echo "incoming"
 echo $1
+echo COMMAND
