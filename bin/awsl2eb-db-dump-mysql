@@ -1,9 +1,42 @@
 #!/bin/bash
 
+if [[ -z "${AWS_EB_ENVIRONMENT}" ]]; then
+	echo "Stopping here as there is no AWS_EB_ENVIRONMENT defined."
+	exit 1
+fi
+
 DUMP_NAME=$AWS_EB_ENVIRONMENT
-DUMP_ENVIRONMENT=$RACK_ENV
 
 TIMESTAMP="$(date +"%Y%m%d%H%M%S")"
-TEMP_FILE="/tmp/$TIMESTAMP-$DUMP_NAME-$DUMP_ENVIRONMENT.sql"
+TEMP_FILE="/tmp/$TIMESTAMP-$DUMP_NAME.sql"
 
 /bin/mysqldump --host=$RDS_HOSTNAME --port=$RDS_PORT --user=$RDS_USERNAME --password=$RDS_PASSWORD $RDS_DB_NAME > $TEMP_FILE
+
+/bin/gzip $TEMP_FILE
+
+TEMP_FILE="$TEMP_FILE.gz"
+
+if [[ -z "${AWSL2EB_GPG_PASSPHRASE}" ]]; then
+	echo "Stopping here as there is no AWSL2EB_GPG_PASSPHRASE defined."
+	echo -e "\n\nLocate the dumped file here:\n\n\t$TEMP_FILE\n"
+	exit 0
+fi
+
+GPG_FILE="$TEMP_FILE.gz.gpg"
+
+/usr/bin/gpg --symmetric --batch --passphrase $AWSL2EB_GPG_PASSPHRASE --output $GPG_FILE $TEMP_FILE
+
+rm TEMP_FILE
+
+if [[ -z "${AWSL2EB_DB_DUMP_BUCKET}" ]]; then
+	echo "Stopping here as there is no AWSL2EB_DB_DUMP_BUCKET defined."
+	echo -e "\n\nLocate the dumped file here:\n\n\t$GPG_FILE\n"
+	exit 0
+fi
+
+aws s3 cp $GPG_FILE $AWSL2EB_DB_DUMP_BUCKET/$GPG_FILE
+
+rm GPG_FILE
+
+echo "Copied the encrypted database dump to S3."
+echo -e "\n\nLocate the dumped file here:\n\n\t$AWSL2EB_DB_DUMP_BUCKET/$GPG_FILE\n"
