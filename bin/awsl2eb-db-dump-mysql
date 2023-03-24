@@ -16,7 +16,7 @@ GPG_FILE="$TEMP_FILE.gpg"
 GPG_FILE_BASENAME=$(basename $GPG_FILE)
 
 echo "* encrypting file"
-/bin/gpg --symmetric --output $GPG_FILE $TEMP_FILE
+/bin/gpg --symmetric --cipher-algo AES256 --output $GPG_FILE $TEMP_FILE
 
 rm $TEMP_FILE
 
