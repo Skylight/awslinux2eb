@@ -1,11 +1,6 @@
 #!/bin/bash
 
-if [[ -z "${AWS_EB_ENVIRONMENT}" ]]; then
-	echo "Stopping here as there is no AWS_EB_ENVIRONMENT defined."
-	exit 1
-fi
-
-DUMP_NAME=$AWS_EB_ENVIRONMENT
+DUMP_NAME=$RDS_DB_NAME
 
 TIMESTAMP="$(date +"%Y%m%d%H%M%S")"
 TEMP_FILE="/tmp/$TIMESTAMP-$DUMP_NAME.sql"
@@ -21,7 +16,7 @@ GPG_FILE="$TEMP_FILE.gpg"
 GPG_FILE_BASENAME=basename $GPG_FILE
 
 echo "* encrypting file"
-/usr/bin/gpg --symmetric --output $GPG_FILE $TEMP_FILE
+/bin/gpg --symmetric --output $GPG_FILE $TEMP_FILE
 
 rm $TEMP_FILE
 
