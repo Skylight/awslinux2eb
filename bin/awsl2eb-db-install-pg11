@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo yum remove -y postgresql postgresql-server
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-6-x86_64/postgresql11-libs-11.4-1PGDG.rhel6.x86_64.rpm
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-6-x86_64/postgresql11-11.4-1PGDG.rhel6.x86_64.rpm
