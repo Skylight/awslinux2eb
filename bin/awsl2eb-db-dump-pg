@@ -1,0 +1,37 @@
+#!/bin/bash
+
+DUMP_NAME=$RDS_DB_NAME
+
+TIMESTAMP="$(date +"%Y%m%d%H%M%S")"
+TEMP_FILE="/tmp/$TIMESTAMP-$DUMP_NAME.sql"
+
+echo "* dumping database"
+PGPASSWORD=$RDS_PASSWORD /bin/pg_dump --password=$RDS_PASSWORD --format=c --host=$RDS_HOSTNAME --username=$RDS_USERNAME $RDS_DB_NAME -f  $TEMP_FILE
+
+echo "* gzipping file"
+/bin/gzip $TEMP_FILE
+
+TEMP_FILE="$TEMP_FILE.gz"
+GPG_FILE="$TEMP_FILE.gpg"
+GPG_FILE_BASENAME=$(basename $GPG_FILE)
+
+echo "* encrypting file"
+/bin/gpg --symmetric --cipher-algo AES256 --output $GPG_FILE $TEMP_FILE
+
+rm $TEMP_FILE
+
+if [[ -z "${AWSL2EB_DB_DUMP_BUCKET}" ]]; then
+	echo "Stopping here as there is no AWSL2EB_DB_DUMP_BUCKET defined."
+	echo -e "\n\nLocate the dumped file here:\n\n\t$GPG_FILE\n"
+	exit 0
+fi
+
+echo "* uploading file"
+aws s3 cp $GPG_FILE $AWSL2EB_DB_DUMP_BUCKET/$GPG_FILE_BASENAME
+
+rm $GPG_FILE
+
+echo -e "\n\nCopied the encrypted database dump to S3."
+echo -e "\n\nLocate the dumped file here:\n\n\t$AWSL2EB_DB_DUMP_BUCKET/$GPG_FILE_BASENAME\n"
+
+
