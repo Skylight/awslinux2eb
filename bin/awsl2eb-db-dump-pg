@@ -6,7 +6,7 @@ TIMESTAMP="$(date +"%Y%m%d%H%M%S")"
 TEMP_FILE="/tmp/$TIMESTAMP-$DUMP_NAME.sql"
 
 echo "* dumping database"
-PGPASSWORD=$RDS_PASSWORD /bin/pg_dump --password=$RDS_PASSWORD --format=c --host=$RDS_HOSTNAME --username=$RDS_USERNAME $RDS_DB_NAME -f  $TEMP_FILE
+PGPASSWORD=$RDS_PASSWORD /bin/pg_dump --format=c --host=$RDS_HOSTNAME --username=$RDS_USERNAME $RDS_DB_NAME -f  $TEMP_FILE
 
 echo "* gzipping file"
 /bin/gzip $TEMP_FILE
