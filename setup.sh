@@ -6,6 +6,11 @@ if ! type -p git >/dev/null; then
 	sudo yum install -y git
 fi
 
+if ! type -p gpg-agent >/dev/null; then
+	sudo yum install gnupg2 -y --allowerasing
+fi
+
+
 if [ ! -d "$HOME/awslinux2eb" ]; then
 	echo "Setting up repository"
 	cd $HOME
