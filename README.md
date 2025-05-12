@@ -3,5 +3,5 @@
 ## Setup
 
 ```bash
-curl -fsSL https://bitbucket.org/stijnster/awslinux2eb/raw/master/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Skylight/awslinux2eb/refs/heads/main/setup.sh | bash
 ```
