@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo yum remove -y postgresql postgresql-server
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/14/redhat/rhel-7.9-x86_64/postgresql14-libs-14.4-1PGDG.rhel7.x86_64.rpm
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/14/redhat/rhel-7.9-x86_64/postgresql14-14.4-1PGDG.rhel7.x86_64.rpm
